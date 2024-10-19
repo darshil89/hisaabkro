@@ -6,7 +6,6 @@ import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-
 export default function Home() {
 
   const { data: session, status } = useSession();
@@ -15,8 +14,11 @@ export default function Home() {
   console.log("session", session);
 
   const handleSignIn = async () => {
-    if (status === 'unauthenticated')
-      await signIn("google");
+    if (status === 'unauthenticated') {
+      await signIn("google" , {
+        callbackUrl: "/dashboard",
+      });
+    }
     else
       await signOut();
   };

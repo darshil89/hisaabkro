@@ -2,9 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
 import Provider from "@/libs/Provider";
-import { redirect } from "next/navigation";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/libs/auth";
 
 
 const geistSans = localFont({
@@ -28,13 +25,6 @@ export default async function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-
-    const session = await getServerSession(authOptions);
-
-    console.log("session", session);
-    if (!session) {
-        redirect("/");
-    }
     return (
         <html lang="en">
             <Provider>
