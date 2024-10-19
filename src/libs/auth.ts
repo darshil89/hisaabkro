@@ -29,7 +29,7 @@ export const authOptions: AuthOptions = {
   },
   secret: process.env.SECRET,
   callbacks: {
-    async jwt({ token, account, user, session }) {
+    async jwt({ token, account, user }) {
       if (account) {
         token.accessToken = account.accessToken as string;
         token.id = user.id;
@@ -37,7 +37,7 @@ export const authOptions: AuthOptions = {
       }
       return token;
     },
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       session.user.id = token.id;
       session.user.emailVerified = token.emailVerified;
       return session;
