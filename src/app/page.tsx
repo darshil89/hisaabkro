@@ -40,6 +40,18 @@ export default function Home() {
           <span>{status === 'unauthenticated' ? "Login" : "Log Out"}</span>
         </button>
       </motion.h1>
+
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8, delay: 1.2 }}
+        className="mt-4 text-center z-auto text-white text-2xl font-bold tracking-tight"
+      >
+        <p className="mb-1">समझदार बनिए, हिसाब रखिएगा।</p> <hr />
+        <p className="mt-1">ಸಮಜ್ಜನರಾಗಿರಿ, ಲೆಕ್ಕ ಕಾಯಿರಿ</p>
+      </motion.div>
+
     </LampContainer>
+
   );
 }
