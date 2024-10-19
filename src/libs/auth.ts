@@ -28,4 +28,19 @@ export const authOptions: AuthOptions = {
     strategy: "jwt",
   },
   secret: process.env.SECRET,
+  callbacks: {
+    async jwt({ token, account, user, session }) {
+      if (account) {
+        token.accessToken = account.accessToken as string;
+        token.id = user.id;
+        token.emailVerified = user.emailVerified;
+      }
+      return token;
+    },
+    async session({ session, token, user }) {
+      session.user.id = token.id;
+      session.user.emailVerified = token.emailVerified;
+      return session;
+    },
+  },
 };
