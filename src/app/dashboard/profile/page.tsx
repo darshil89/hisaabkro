@@ -1,8 +1,10 @@
 import React, { FC } from 'react'
 
-const Page : FC = () => {
+const Page: FC = () => {
   return (
-    <div>Profile Page</div>
+    <div>
+      <div className="text-center">Profile</div>
+    </div>
   )
 }
 
