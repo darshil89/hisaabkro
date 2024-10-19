@@ -2,9 +2,26 @@
 import { LampContainer } from "@/components/ui/lamp";
 import { motion } from "framer-motion";
 import Image from "next/image";
-
+import { signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  const handleSignIn = async () => {
+    await signIn("google");
+  };
+
+  useEffect(() => {
+    if (session) {
+      router.push("/dashboard");
+    }
+  }, [session, router]);
+
   return (
     <LampContainer>
       <motion.h1
