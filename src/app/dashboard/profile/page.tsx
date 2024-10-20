@@ -26,7 +26,8 @@ const Page: FC = () => {
       setFriends(friends)
     }
   }
-  const handleDelete = async (id: string) => {
+  const handleDelete = async (id: string | undefined) => {
+    if (!id) return
     await deleteFriend(id)
     await getFriendsFromDB(session?.user.id)
     const friends = await getFriendsFromDB(session?.user.id) || []
