@@ -1,7 +1,7 @@
 "use client";
-import { getFriendsFromDB, getSplit } from "@/helpers/dbConnect";
-import React, { FC, useState, useEffect, use } from "react";
-import { Friends, Split, Splits } from "@/types/user";
+import { addSplitBill, getFriendsFromDB, getSplit } from "@/helpers/dbConnect";
+import React, { FC, useState, useEffect } from "react";
+import { Friends, Split } from "@/types/user";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
@@ -89,7 +89,7 @@ const Page: FC = () => {
         }
 
         // build an array of objs that contain name , email and amount to be paid
-        const finalArray : {name: string, email: string, amount: number}[] = [];
+        const finalArray: { name: string, email: string, amount: number }[] = [];
 
         // match the name of the friend and f to get the email 
         selectedFriends.forEach((friend) => {
@@ -99,13 +99,13 @@ const Page: FC = () => {
                 amount: f[friend.name],
             });
         });
-        
+
         const split = {
             splitId: splitDetails.id,
             finalArray,
         };
 
-        console.log("split = ", split);
+        await addSplitBill(split);
 
 
         // router.push("/dashboard/expense");

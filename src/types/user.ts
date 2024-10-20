@@ -27,6 +27,12 @@ export type Split = {
   updatedAt?: Date;
 }
 
+export type SplitMember = {
+  name: string;
+  email?: string;
+  amount: number;
+}
+
 export type Splits = Split[];
 
 export type Friends = Friend[];

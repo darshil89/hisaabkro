@@ -92,3 +92,19 @@ export async function getSplit(
     console.error(error);
   }
 }
+
+//function to add the split bill among members
+export async function addSplitBill(split: {
+  splitId: string | undefined;
+  finalArray: { name: string; email: string; amount: number }[];
+}) {
+  try {
+    console.log("split in backend connect = ", split);
+    const response = await axios.post("/api/splitbill", {
+      split,
+    });
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
