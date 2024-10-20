@@ -69,7 +69,7 @@ const ExpensePage = () => {
               </div>
               <p>{formatDateTime(item.createdAt)}</p>
             </Link>
-            <div className={`&#8377;{item.splitStatus ? "text-green-500" : "text-red-500"} ml-4`}>
+            <div className={`${item.splitStatus ? "text-green-500" : "text-red-500"} ml-4`}>
               {!item.splitStatus ? "Pending" : "Resolved"}
             </div>
           </li>
