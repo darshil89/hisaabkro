@@ -49,10 +49,10 @@ Follow these instructions to set up the project locally.
    ```
 2. Set up auth and databse credentials in .env
 3. ```
-         DATABASE_URL="mongodb+srv://username:password@cluster0.sqjnq.mongodb.net/hisaab?retryWrites=true&w=majority&appName=Cluster0"
-         GOOGLE_CLIENT_ID=''
-         GOOGLE_CLIENT_SECRET=''
-         SECRET=''
+   DATABASE_URL="mongodb+srv://username:password@cluster0.sqjnq.mongodb.net/hisaab?retryWrites=true&w=majority&appName=Cluster0"
+   GOOGLE_CLIENT_ID=''
+   GOOGLE_CLIENT_SECRET=''
+   SECRET=''
    ```
 4. Install the dependencies
   ```bash
