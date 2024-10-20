@@ -1,6 +1,6 @@
 "use client";
 import { getFriendsFromDB, getSplit } from "@/helpers/dbConnect";
-import React, { FC, useState, useEffect } from "react";
+import React, { FC, useState, useEffect, use } from "react";
 import { Friends, Split, Splits } from "@/types/user";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -22,16 +22,29 @@ const Page: FC = () => {
     const id = pathname.split("/").pop();
 
     const addNewFriend = async () => {
-        if (newFriend.trim()) {
-            const friends = {
-                name: newFriend,
-                email: undefined,
-            };
+        if (selectedFriends.find((friend) => friend.name === newFriend)) {
+            alert("Friend already added");
+            return;
+        }
+
+        const friends = {
+            name: newFriend,
+            email: undefined,
+            userId: session?.user?.id,
+        };
+
+        if (friends) {
+            setSelectedFriends([...selectedFriends, friends]);
+            setNewFriend("");
         }
     };
 
     const addExistingFriend = (friendName: string) => {
         const friend = existingFriends.find((friend) => friend.name === friendName);
+        if (selectedFriends.find((friend) => friend.name === friendName)) {
+            alert("Friend already added");
+            return;
+        }
         if (friend) {
             setSelectedFriends([...selectedFriends, friend]);
         }
@@ -54,11 +67,11 @@ const Page: FC = () => {
         existingFriends();
     }, [session, router]);
 
-    console.log(session);
-
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-6 text-center">{splitDetails.name}</h1>
+            <h1 className="text-3xl font-bold text-center">{splitDetails.name}</h1>
+            <hr className="mb-1 mt-1" />
+            <p className="text-lg mb-6 text-center">Split Method : {splitDetails.splitMethod}</p>
 
             {/* Add New Friend Section */}
             <div className="mb-6">

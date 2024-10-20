@@ -11,9 +11,9 @@ export type User = {
 
 export type Friend = {
   name: string;
-  email: string;
-  id: string;
-  userId: string;
+  email?: string;
+  id?: string;
+  userId?: string;
 };
 
 export type Split = {
