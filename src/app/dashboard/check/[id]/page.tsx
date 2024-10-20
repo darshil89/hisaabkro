@@ -22,7 +22,6 @@ const SplitDetailsPage: FC = () => {
     const fetchSplitDetails = async () => {
       try {
         const response = await getSplitBill(id);
-        console.log('response = ', response);
         setSplitMembers(response.splitMembers);
         setTotalAmount(response.totalAmount);
 

@@ -11,8 +11,6 @@ export default function Home() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
-  console.log("session", session);
-
   const handleSignIn = async () => {
     if (status === 'unauthenticated') {
       await signIn("google" , {

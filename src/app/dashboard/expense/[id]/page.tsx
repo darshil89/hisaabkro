@@ -110,8 +110,6 @@ const Page: FC = () => {
             finalArray,
         };
 
-        console.log("split = ", split);
-
         await addSplitBill(split);
 
 
@@ -140,8 +138,6 @@ const Page: FC = () => {
         fetchSplit();
         existingFriends();
     }, [session, router]);
-
-    console.log("selected friends = ", friendAmounts);
 
     return (
         <div className="container mx-auto p-4">

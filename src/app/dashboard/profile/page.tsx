@@ -14,8 +14,6 @@ const Page: FC = () => {
   const { data: session, update, status } = useSession()
   const router = useRouter()
 
-  console.log(session)
-
   const addFriend = async (e: React.FormEvent) => {
     e.preventDefault()
     if (newFriend.name && newFriend.email) {
@@ -46,7 +44,6 @@ const Page: FC = () => {
 
     // adding the number to the user in the database
     const response = await addNunmberToDB(number, session?.user.id)
-    console.log(response)
     alert('Mobile number saved successfully!')
   }
 
@@ -64,7 +61,6 @@ const Page: FC = () => {
     async function fetchFriends() {
       if (session) {
         const friends = await getFriendsFromDB(session?.user.id) || []
-        console.log(friends)
         setFriends(friends)
       }
     }

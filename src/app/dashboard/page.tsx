@@ -30,7 +30,6 @@ const Dashboard = () => {
 
       setYourTotalExpense(total);
       setSplits(resolvedSplits);
-      console.log("split = ", split);
     }
 
     fetchSplits();

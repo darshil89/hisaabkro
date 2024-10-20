@@ -23,10 +23,8 @@ const ExpensePage = () => {
   };
 
   const handleOk = async () => {
-    console.log("splitDetails = ", splitDetails);
     // create split
     const newSplit = await createSplit(splitDetails, session?.user?.id);
-    console.log("new split = ", newSplit);
 
     setSplits([...splits, newSplit]);
     showModal();

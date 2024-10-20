@@ -99,7 +99,6 @@ export async function addSplitBill(split: {
   finalArray: { name: string; email: string; amount: number }[];
 }) {
   try {
-    console.log("split in backend connect = ", split);
     const response = await axios.post("/api/splitbill", {
       split,
     });

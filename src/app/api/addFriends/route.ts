@@ -18,7 +18,6 @@ export async function POST(req: Request) {
       },
     });
 
-    console.log(friend);
     return NextResponse.json({ message: "Friends added successfully" });
   } catch (error) {
     console.error(error);
