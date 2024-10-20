@@ -21,7 +21,7 @@
 - 🔥 **Add Freinds:** Add your friends to split the bills fastly.
 - 🛠️ **Auth2 Google Authentication:** Ensured secure and controlled access to the platform through Google auth.
 - 💡 **Dashboard:** Monitor your budget including full expense and task wise expense.
-- 🚀 **PDF Downloader:** Download you receipt in PDF Formate
+- 🚀 **PDF Downloader:** Download you receipt in PDF Format.
 ---
 
 ## **Tech Stack** 🛠️
