@@ -16,4 +16,12 @@ export type Friend = {
   userId: string;
 };
 
+export type Split = {
+  name: string;
+  amount: number;
+  type: string;
+}
+
+export type Splits = Split[];
+
 export type Friends = Friend[];

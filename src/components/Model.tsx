@@ -1,16 +1,19 @@
+import { Split } from '@/types/user'
 import React from 'react'
 
 interface ModelProps {
     showModal: () => void
     handleOk: (e: React.FormEvent) => void
+    setSplitDetails: React.Dispatch<React.SetStateAction<Split>>
+    splitDetails: Split
 }
 
-const Model = ({ handleOk, showModal }: ModelProps) => {
+const Model = ({ handleOk, showModal, splitDetails, setSplitDetails }: ModelProps) => {
     return (
         <div className="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full">
             <div className="relative top-20 mx-auto p-5 border w-96 shadow-lg rounded-md bg-white">
                 <h3 className="text-lg font-bold mb-4">Add New Split</h3>
-                <form onSubmit={handleOk}>
+                <div>
                     <div className="mb-4">
                         <label
                             htmlFor="name"
@@ -20,6 +23,8 @@ const Model = ({ handleOk, showModal }: ModelProps) => {
                         </label>
                         <input
                             type="text"
+                            value={splitDetails.name}
+                            onChange={(e) => setSplitDetails({ ...splitDetails, name: e.target.value })}
                             id="name"
                             name="name"
                             required
@@ -35,6 +40,8 @@ const Model = ({ handleOk, showModal }: ModelProps) => {
                         </label>
                         <input
                             type="number"
+                            value={splitDetails.amount}
+                            onChange={(e) => setSplitDetails({ ...splitDetails, amount: +e.target.value })}
                             id="amount"
                             name="amount"
                             required
@@ -51,6 +58,8 @@ const Model = ({ handleOk, showModal }: ModelProps) => {
                         <select
                             id="type"
                             name="type"
+                            value={splitDetails.type}
+                            onChange={(e) => setSplitDetails({ ...splitDetails, type: e.target.value })}
                             required
                             className="mt-1 block w-full p-2 rounded-md border border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                         >
@@ -62,6 +71,7 @@ const Model = ({ handleOk, showModal }: ModelProps) => {
                     </div>
                     <div className="mt-4">
                         <button
+                            onClick={handleOk}
                             type="submit"
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2"
                         >
@@ -74,7 +84,7 @@ const Model = ({ handleOk, showModal }: ModelProps) => {
                             Cancel
                         </button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     )

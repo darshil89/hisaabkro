@@ -1,6 +1,6 @@
 "use client";
 
-import { Friend } from "@/types/user";
+import { Friend, Split } from "@/types/user";
 import axios from "axios";
 
 // function to add user number to the database
@@ -46,10 +46,24 @@ export async function getFriendsFromDB(userId: string | undefined) {
 }
 
 // function to delete a particular friend from the database
-
 export async function deleteFriend(friendId: string) {
   try {
     const response = await axios.delete(`/api/addFriends/${friendId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+// function to create a split
+export async function createSplit(split: Split, userId: string | undefined) {
+  try {
+    const response = await axios.post("/api/split", {
+      name: split.name,
+      amount: split.amount,
+      type: split.type,
+      userId,
+    });
     return response.data;
   } catch (error) {
     console.error(error);

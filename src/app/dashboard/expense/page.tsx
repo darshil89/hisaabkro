@@ -1,23 +1,37 @@
 "use client";
 import Model from "@/components/Model";
+import { createSplit } from "@/helpers/dbConnect";
+import { Split } from "@/types/user";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-
-interface Split {
-  id: number;
-  name: string;
-  amount: number;
-  type: string;
-}
 
 const ExpensePage = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [splits, setSplits] = useState<Split[]>([]);
+  const [splitDetails, setSplitDetails] = useState<Split>({
+    name: "",
+    amount: 0,
+    type: "",
+  });
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const showModal = () => {
     setIsModalVisible(!isModalVisible);
   };
 
-  const handleOk = () => { };
+  const handleOk = async () => {
+    console.log("ok");
+    console.log(splitDetails);
+
+    // create split
+    const newSplit = await createSplit(splitDetails, session?.user?.id);
+    console.log(newSplit);
+
+    
+
+  };
 
   return (
     <div className="p-4">
@@ -29,12 +43,12 @@ const ExpensePage = () => {
       </button>
 
       {isModalVisible && (
-        <Model showModal={showModal} handleOk={handleOk} />
+        <Model showModal={showModal} handleOk={handleOk} setSplitDetails={setSplitDetails} splitDetails={splitDetails} />
       )}
 
       <ul className="mt-4">
-        {splits.map((item) => (
-          <li key={item.id} className="border-b py-2">
+        {splits.map((item, index) => (
+          <li key={index} className="border-b py-2">
             <h3 className="font-bold">{item.name}</h3>
             <p>
               Amount: ${item.amount} | Type: {item.type}
