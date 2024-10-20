@@ -27,6 +27,8 @@ const Page: FC = () => {
       const friends = await getFriendsFromDB(session?.user.id) || []
       setFriends(friends)
       setLoading(false)
+      setNewFriend({ name: '', email: '' })
+      alert('Friend added successfully!')
     }
   }
 
