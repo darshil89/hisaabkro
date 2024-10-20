@@ -1,6 +1,7 @@
 "use client";
 import Model from "@/components/Model";
 import { createSplit, getSplits } from "@/helpers/dbConnect";
+import { formatDateTime } from "@/helpers/formate";
 import { Split } from "@/types/user";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -66,6 +67,7 @@ const ExpensePage = () => {
                   Amount: ${item.totalAmount} | Type: {item.splitMethod}
                 </p>
               </div>
+              <p>{formatDateTime(item.createdAt)}</p>
             </Link>
             <div className={`${item.splitStatus ? "text-green-500" : "text-red-500"} ml-4`}>
               {!item.splitStatus ? "Pending" : "Resolved"}
