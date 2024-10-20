@@ -13,6 +13,7 @@ const Dashboard = () => {
   const { data: session } = useSession();
   const [splits, setSplits] = useState<Split[]>([]);
   const [yourTotalExpense, setYourTotalExpense] = useState(0);
+  const [yourEveryExpense, setYourEveryExpense] = useState<number[]>([]);
   const router = useRouter();
 
   // Function to download the PDF
@@ -55,13 +56,13 @@ const Dashboard = () => {
           member.email === session?.user.email ? member.amount : 0
         );
         return memberAmount?.reduce((acc, curr) => acc + curr, 0);
-      });
+      })
 
       const total = yourExpenses.reduce(
         (acc: number, curr: number | undefined) => acc + (curr ?? 0),
         0
       );
-
+      setYourEveryExpense(yourExpenses as number[]);
       setYourTotalExpense(total);
       setSplits(resolvedSplits);
     };
@@ -120,7 +121,7 @@ const Dashboard = () => {
 
                   <li key={index} className=" py-2">
                     <h3 className="font-bold">Your Expense</h3>
-                    <p className="text-end">{item.totalAmount}</p>
+                    <p className="text-end">{yourEveryExpense[index]}</p>
                   </li>
                 </div>
               ))}
