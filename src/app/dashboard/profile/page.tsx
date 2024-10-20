@@ -95,7 +95,7 @@ const Page: FC = () => {
           </div>
         </div>
         <div>
-          <button onClick={() => handleSignOut()} className="w-fit mt-8 shadow-[inset_0_0_0_2px_#616467] flex justify-center space-x-4 items-center text-black px-6 py-2 rounded-full text-sm tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+          <button onClick={() => handleSignOut()} className="w-fit mt-8 shadow-[inset_0_0_0_2px_#616467] flex justify-center space-x-4 items-center text-gray-600 px-6 py-2 rounded-full text-sm tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white transition duration-200">
             <span>Log Out</span>
           </button>
         </div>
