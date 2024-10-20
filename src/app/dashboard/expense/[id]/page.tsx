@@ -23,7 +23,7 @@ const Page: FC = () => {
     const id = pathname.split("/").pop();
 
     const addNewFriend = async () => {
-        if(!newFriend) {
+        if (!newFriend) {
             alert("Please enter a friend's name");
             return;
         }
@@ -66,11 +66,49 @@ const Page: FC = () => {
         } else if (splitDetails.splitMethod === 'exact') {
             newAmount = Math.min(splitDetails.totalAmount, Math.max(0, amount));
         }
-        
+
         setFriendAmounts(prev => ({
             ...prev,
             [friendName]: newAmount
         }));
+    };
+
+    const handleSplitbill = async () => {
+        if (selectedFriends.length === 0) {
+            alert("Please select at least one friend");
+            return;
+        }
+
+        let f: { [key: string]: number } = {};
+        if (splitDetails.splitMethod !== 'equal') {
+            f = friendAmounts;
+        } else {
+            selectedFriends.forEach((friend) => {
+                f[friend.name] = parseFloat((splitDetails.totalAmount / selectedFriends.length).toFixed(2));
+            });
+        }
+
+        // build an array of objs that contain name , email and amount to be paid
+        const finalArray : {name: string, email: string, amount: number}[] = [];
+
+        // match the name of the friend and f to get the email 
+        selectedFriends.forEach((friend) => {
+            finalArray.push({
+                name: friend.name,
+                email: friend.email || "",
+                amount: f[friend.name],
+            });
+        });
+        
+        const split = {
+            splitId: splitDetails.id,
+            finalArray,
+        };
+
+        console.log("split = ", split);
+
+
+        // router.push("/dashboard/expense");
     };
 
 
@@ -95,6 +133,8 @@ const Page: FC = () => {
         fetchSplit();
         existingFriends();
     }, [session, router]);
+
+    console.log("selected friends = ", friendAmounts);
 
     return (
         <div className="container mx-auto p-4">
@@ -135,7 +175,9 @@ const Page: FC = () => {
                     <div className="flex">
                         <select
                             className="flex-grow p-2 border rounded-l"
-                            onChange={(e) => addExistingFriend(e.target.value)}
+                            onChange={(e) => {
+                                addExistingFriend(e.target.value)
+                            }}
                             value=""
                         >
                             <option value="">Select a friend</option>
@@ -145,13 +187,7 @@ const Page: FC = () => {
                                 </option>
                             ))}
                         </select>
-                        <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded-r hover:bg-blue-600"
-                            onClick={() => addExistingFriend(existingFriends[0]?.name)}
-                            disabled={existingFriends.length === 0}
-                        >
-                            Add
-                        </button>
+
                     </div>
                 )}
             </div>
@@ -200,6 +236,15 @@ const Page: FC = () => {
                         ))}
                     </ul>
                 )}
+            </div>
+
+            <div>
+                <button
+                    className="bg-blue-500 w-full text-white px-4 py-2 rounded mt-4 hover:bg-blue-600"
+                    onClick={() => handleSplitbill()}
+                >
+                    Save Split
+                </button>
             </div>
         </div>
     );
