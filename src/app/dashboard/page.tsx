@@ -6,6 +6,7 @@ import { Split } from "@/types/user";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { formatDateTime } from "@/helpers/formate";
+import jsPDF from "jspdf";
 
 const Dashboard = () => {
   // Generate random data
@@ -15,10 +16,29 @@ const Dashboard = () => {
   const router = useRouter();
 
   const handleDownload = async () => {
-    const data = {
-      yourTotalExpense,
-      splits,
-    };
+    const doc = new jsPDF(); // Create a new jsPDF instance
+
+    // Add title
+    doc.setFontSize(20);
+    doc.text("Expense Report", 20, 20);
+
+    // Add total expense
+    doc.setFontSize(16);
+    doc.text(`Total Expense: ₹${yourTotalExpense}`, 20, 30);
+
+    // Add splits details
+    doc.setFontSize(14);
+    splits.forEach((item, index) => {
+      const startY = 40 + index * 40; // Increase spacing between splits
+      doc.text(`Split ${index + 1}: ${item.name}`, 20, startY);
+      doc.text(`Total Amount: ₹${item.totalAmount}`, 20, startY + 10);
+      doc.text(`Type: ${item.splitMethod}`, 20, startY + 20);
+      doc.text(`Created At: ${formatDateTime(item.createdAt)}`, 20, startY + 30);
+      doc.text(" ", 20, startY + 40); // Add space between splits
+    });
+
+    // Save the PDF
+    doc.save("expense_report.pdf");
   };
 
   useEffect(() => {
@@ -67,7 +87,7 @@ const Dashboard = () => {
               Expense Splits <span className="text-green-500">(Resolved)</span>
             </h2>
             <button
-              onClick={handleDownload}
+              onClick={() => handleDownload()}
               className="w-fit shadow-[inset_0_0_0_2px_#616467] flex justify-center space-x-4 items-center text-slate-500 px-3 py-1 rounded-full text-sm tracking-widest uppercase font-bold hover:bg-[#616467] hover:text-white  duration-200"
             >
               <span>Download</span>
