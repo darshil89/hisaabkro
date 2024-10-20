@@ -80,12 +80,17 @@ const Page: FC = () => {
         }
 
         let f: { [key: string]: number } = {};
-        if (splitDetails.splitMethod !== 'equal') {
+        if (splitDetails.splitMethod === 'exact') {
             f = friendAmounts;
-        } else {
+        } else if (splitDetails.splitMethod === 'equal') {
             selectedFriends.forEach((friend) => {
                 f[friend.name] = parseFloat((splitDetails.totalAmount / selectedFriends.length).toFixed(2));
             });
+        } else {
+            selectedFriends.forEach((friend) => {
+                f[friend.name] = parseFloat(((friendAmounts[friend.name] / 100) * splitDetails.totalAmount).toFixed(2));
+            });
+
         }
 
         // build an array of objs that contain name , email and amount to be paid
@@ -105,10 +110,12 @@ const Page: FC = () => {
             finalArray,
         };
 
+        console.log("split = ", split);
+
         await addSplitBill(split);
 
 
-        // router.push("/dashboard/expense");
+        router.push("/dashboard/expense");
     };
 
 
