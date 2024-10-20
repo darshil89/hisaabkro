@@ -9,6 +9,9 @@ export async function GET(req: Request) {
     where: {
       userId: userId as string,
     },
+    include:{
+      SplitMember: true
+    }
   });
 
   return NextResponse.json(splits);

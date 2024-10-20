@@ -25,6 +25,7 @@ export type Split = {
   splitMethod: string;
   createdAt?: Date;
   updatedAt?: Date;
+  SplitMember?: SplitMember[];
 }
 
 export type SplitMember = {
