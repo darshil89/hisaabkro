@@ -2,6 +2,9 @@
 
 ---
 ![App Screenshot](/public/icons/landing.png)
+
+[Watch Video](/public/video/hisaab.mp4)
+
 ---
 
 ## **Overview**
@@ -21,7 +24,7 @@
 - 🔥 **Add Freinds:** Add your friends to split the bills fastly.
 - 🛠️ **Auth2 Google Authentication:** Ensured secure and controlled access to the platform through Google auth.
 - 💡 **Dashboard:** Monitor your budget including full expense and task wise expense.
-- 🚀 **PDF Downloader:** Download you receipt in PDF Formate
+- 🚀 **PDF Downloader:** Download you receipt in PDF Format.
 ---
 
 ## **Tech Stack** 🛠️
@@ -49,10 +52,10 @@ Follow these instructions to set up the project locally.
    ```
 2. Set up auth and databse credentials in .env
 3. ```
-         DATABASE_URL="mongodb+srv://username:password@cluster0.sqjnq.mongodb.net/hisaab?retryWrites=true&w=majority&appName=Cluster0"
-         GOOGLE_CLIENT_ID=''
-         GOOGLE_CLIENT_SECRET=''
-         SECRET=''
+   DATABASE_URL="mongodb+srv://username:password@cluster0.sqjnq.mongodb.net/hisaab?retryWrites=true&w=majority&appName=Cluster0"
+   GOOGLE_CLIENT_ID=''
+   GOOGLE_CLIENT_SECRET=''
+   SECRET=''
    ```
 4. Install the dependencies
   ```bash
@@ -67,18 +70,6 @@ Follow these instructions to set up the project locally.
     ```bash
    npm run dev
    ```
-
----
-
-## **Contributing** 🤝
-
-Contributions are welcome! Follow these steps:
-
-1. **Fork the repo**
-2. **Create your feature branch**: `git checkout -b feature/AmazingFeature`
-3. **Commit your changes**: `git commit -m 'Add some AmazingFeature'`
-4. **Push to the branch**: `git push origin feature/AmazingFeature`
-5. **Open a pull request**
 
 ---
 
