@@ -17,8 +17,8 @@ const SplitDetailsPage: FC = () => {
   const [splitMembers, setSplitMembers] = useState<SplitMember[]>([]);
   const [totalAmout, setTotalAmount] = useState<number>(0);
 
+  // Fetch split details when the status is updated to Resolved
   useEffect(() => {
-    // Fetch split details from your API
     const fetchSplitDetails = async () => {
       try {
         const response = await getSplitBill(id);

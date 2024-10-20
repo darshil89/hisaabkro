@@ -22,6 +22,7 @@ const Page: FC = () => {
     const pathname = usePathname();
     const id = pathname.split("/").pop();
 
+    // function to add a new friend to the selected friends list
     const addNewFriend = async () => {
         if (!newFriend) {
             alert("Please enter a friend's name");
@@ -44,6 +45,7 @@ const Page: FC = () => {
         }
     };
 
+    // function to add the existing friend to the selected friends list
     const addExistingFriend = (friendName: string) => {
         const friend = existingFriends.find((friend) => friend.name === friendName);
         if (selectedFriends.find((friend) => friend.name === friendName)) {
@@ -55,6 +57,8 @@ const Page: FC = () => {
         }
     };
 
+
+    // function to update the amount of the friend based on the split method
     const updateFriendAmount = (friendName: string, amount: number) => {
         if (splitDetails.splitMethod === 'equal') {
             return;
@@ -73,6 +77,7 @@ const Page: FC = () => {
         }));
     };
 
+    // Function to handle the split bill and save it to the database
     const handleSplitbill = async () => {
         if (selectedFriends.length === 0) {
             alert("Please select at least one friend");
@@ -117,6 +122,8 @@ const Page: FC = () => {
     };
 
 
+
+    // Fetch the existing friends and the split details
     useEffect(() => {
         const existingFriends = async () => {
             if (!session) return;

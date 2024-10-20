@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 
 // dynamic route to get user friends from the database
-
 export async function GET(req: Request) {
   const url = String(req.url);
   const parts = url.split("/");
@@ -23,6 +22,8 @@ export async function GET(req: Request) {
   }
 }
 
+
+// dynamic route to add friends to the database
 export async function DELETE(req: Request) {
   const url = String(req.url);
   const parts = url.split("/");

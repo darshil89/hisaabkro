@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 
+
+// route to add number to the user
 export async function POST(req: Request) {
   const { number, userId } = await req.json();
 

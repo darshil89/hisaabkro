@@ -14,6 +14,8 @@ const Page: FC = () => {
   const { data: session, update, status } = useSession()
   const router = useRouter()
 
+
+  // adding the friend to the friends list
   const addFriend = async (e: React.FormEvent) => {
     e.preventDefault()
     if (newFriend.name && newFriend.email) {
@@ -24,6 +26,8 @@ const Page: FC = () => {
       setFriends(friends)
     }
   }
+
+  // deleting the friend from the friends list
   const handleDelete = async (id: string | undefined) => {
     if (!id) return
     await deleteFriend(id)
@@ -47,16 +51,19 @@ const Page: FC = () => {
     alert('Mobile number saved successfully!')
   }
 
+  // signing out the user
   const handleSignOut = async () => {
     await signOut();
   }
 
+  // redirecting to the home page if the user is not authenticated
   useEffect(() => {
     if (status === 'unauthenticated') {
       router.push('/')
     }
   }, [status, router])
 
+  // fetching the friends list from the database
   useEffect(() => {
     async function fetchFriends() {
       if (session) {

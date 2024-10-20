@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 
+// route to get split from the database based on the user id
 export async function GET(req: Request) {
   const url = String(req.url);
   const parts = url.split("/");

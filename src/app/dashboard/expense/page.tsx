@@ -18,10 +18,13 @@ const ExpensePage = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
+  // Function to show the modal
   const showModal = () => {
     setIsModalVisible(!isModalVisible);
   };
 
+
+  // Function to handle the creation of the split
   const handleOk = async () => {
     // create split
     const newSplit = await createSplit(splitDetails, session?.user?.id);
@@ -30,6 +33,7 @@ const ExpensePage = () => {
     showModal();
   };
 
+  // Fetch splits
   useEffect(() => {
     const fetchSplits = async () => {
       if (!session) return;

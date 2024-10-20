@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [yourTotalExpense, setYourTotalExpense] = useState(0);
   const router = useRouter();
 
+  // Function to download the PDF
   const handleDownload = async () => {
     const doc = new jsPDF(); // Create a new jsPDF instance
 
@@ -41,6 +42,7 @@ const Dashboard = () => {
     doc.save("expense_report.pdf");
   };
 
+  // Splits user split details and total expense
   useEffect(() => {
     if (!session) return;
 

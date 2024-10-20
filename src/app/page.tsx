@@ -12,8 +12,9 @@ export default function Home() {
   const router = useRouter();
 
   const handleSignIn = async () => {
+    // based on the status of the session, we will either sign in or sign out
     if (status === 'unauthenticated') {
-      await signIn("google" , {
+      await signIn("google", {
         callbackUrl: "/dashboard/profile",
       });
     }
