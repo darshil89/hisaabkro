@@ -1,10 +1,14 @@
 "use client";
 import Link from 'next/link';
 import React, { FC, useState } from 'react'
+import { usePathname } from 'next/navigation';
 
 const Navbar: FC = () => {
 
-    const [activeTab, setActiveTab] = useState("profile");
+    const path = usePathname()
+    const activetab = path.split('/')[2]
+
+    const [activeTab, setActiveTab] = useState(activetab);
 
     return (
         <nav className="flex font-permanent-marker justify-between text-center mb-6 pb-2">

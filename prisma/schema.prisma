@@ -19,16 +19,40 @@ model User {
   accounts      Account[]
   sessions      Session[]
   friends       Friend[]
+  splits        Split[]
 }
 
 model Friend {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   name      String
-  email     String
+  email     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String   @db.ObjectId
+}
+
+model Split {
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  totalAmount String
+  splitMethod String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String        @db.ObjectId
+  SplitMember SplitMember[]
+}
+
+model SplitMember {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String?
+  amount    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  split     Split    @relation(fields: [splitId], references: [id], onDelete: Cascade)
+  splitId   String   @db.ObjectId
 }
 
 model Account {

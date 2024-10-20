@@ -21,7 +21,7 @@ export async function addNunmberToDB(
 
 // function to add user frineds to the database
 export async function addFriendsToDB(
-  friends: { name: string; email: string },
+  friends: { name: string; email: string | undefined },
   userId: string | undefined
 ) {
   try {
