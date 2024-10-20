@@ -80,16 +80,15 @@ const Page: FC = () => {
   }, [session])
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg">
-      <div className='flex justify-between'>
-
-        <div className="flex items-center mb-6">
+    <div className="max-w-2xl mx-auto p-4 md:p-6 bg-white rounded-lg">
+      <div className='flex flex-col md:flex-row justify-between items-center mb-6'>
+        <div className="flex items-center mb-4 md:mb-0">
           <Image
             src={session?.user.image || '/icons/user.jpg'}
             alt="Profile Picture"
             width={100}
             height={100}
-            className="rounded-full mr-6"
+            className="rounded-full mr-4"
           />
           <div>
             <h2 className="text-2xl font-semibold">{session?.user.name}</h2>
@@ -97,7 +96,7 @@ const Page: FC = () => {
           </div>
         </div>
         <div>
-          <button onClick={() => handleSignOut()} className="w-fit mt-8 shadow-[inset_0_0_0_2px_#616467] flex justify-center space-x-4 items-center text-gray-600 px-6 py-2 rounded-full text-sm tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white transition duration-200">
+          <button onClick={() => handleSignOut()} className="w-full md:w-auto mt-4 md:mt-0 shadow-[inset_0_0_0_2px_#616467] flex justify-center space-x-4 items-center text-gray-600 px-6 py-2 rounded-full text-sm tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white transition duration-200">
             <span>Log Out</span>
           </button>
         </div>
@@ -106,20 +105,25 @@ const Page: FC = () => {
       <div className="mb-6">
         <label htmlFor="mobile" className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
         <div className="relative">
-          {session?.user.number ? <>
+          {session?.user.number ? (
             <div className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-16'>{session?.user.number}</div>
-          </> : <><input
-            type="tel"
-            id="mobile"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-16"
-            placeholder="Enter your mobile number"
-          /> <button onClick={() => saveNumber()}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 transition duration-200"
-          >
-              Save
-            </button></>}
+          ) : (
+            <>
+              <input
+                type="tel"
+                id="mobile"
+                value={number}
+                onChange={(e) => setNumber(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-16"
+                placeholder="Enter your mobile number"
+              />
+              <button onClick={() => saveNumber()}
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 transition duration-200"
+              >
+                Save
+              </button>
+            </>
+          )}
         </div>
       </div>
 
@@ -127,7 +131,7 @@ const Page: FC = () => {
 
       <h3 className="text-xl font-semibold mb-4">Add Friends</h3>
       <form onSubmit={addFriend} className="mb-6">
-        <div className="flex gap-4 mb-4">
+        <div className="flex flex-col md:flex-row gap-4 mb-4">
           <input
             type="text"
             value={newFriend.name}
@@ -155,12 +159,10 @@ const Page: FC = () => {
 
       {loading && <p className="text-gray-500 text-xl text-center italic">Loading...</p>}
 
-
       <h3 className="text-xl font-semibold mb-4">Friends List</h3>
       {friends.length > 0 ? (
         <ul className="space-y-2">
           {friends.map((friend, id) => (
-
             <li key={id} className="flex justify-between bg-gray-100 p-3 rounded-md">
               <div>
                 <p className="font-semibold">{friend.name}</p>
@@ -170,7 +172,6 @@ const Page: FC = () => {
                 <AiOutlineDelete size={25} />
               </button>
             </li>
-
           ))}
         </ul>
       ) : (
