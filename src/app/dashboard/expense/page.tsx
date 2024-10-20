@@ -60,7 +60,7 @@ const ExpensePage = () => {
       <ul className="mt-4 space-y-4">
         {splits.map((item, index) => (
           <li key={index} className="flex justify-between items-center border-b py-2">
-            <Link href={!item.splitStatus ? `/dashboard/expense/&#8377;{item.id}` : `/dashboard/check/&#8377;{item.id}`} className="flex-1">
+            <Link href={!item.splitStatus ? `/dashboard/expense/${item.id}` : `/dashboard/check/${item.id}`} className="flex-1">
               <div>
                 <h3 className="font-bold">{item.name}</h3>
                 <p>
