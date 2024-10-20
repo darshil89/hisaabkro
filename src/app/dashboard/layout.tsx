@@ -17,7 +17,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Provider>
-        <div className="min-h-screen bg-slate-50 flex justify-center items-center">
+        <div className="min-h-screen bg-slate-50 overflow-y-auto flex justify-center items-center">
           <div className="relative w-4/5 h-screen md:w-2/3 lg:w-1/2 p-6 rounded-lg">
             <div className="absolute inset-0 pointer-events-none rounded-lg border-[0px] border-transparent box-border"></div>
             <Navbar />

@@ -11,6 +11,7 @@ const Page: FC = () => {
   const [friends, setFriends] = useState<Friend[]>([])
   const [newFriend, setNewFriend] = useState({ name: '', email: '' })
   const [number, setNumber] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
   const { data: session, update, status } = useSession()
   const router = useRouter()
 
@@ -20,10 +21,12 @@ const Page: FC = () => {
     e.preventDefault()
     if (newFriend.name && newFriend.email) {
       // adding the friend to the friends list
+      setLoading(true)
       await addFriendsToDB(newFriend, session?.user.id)
       await getFriendsFromDB(session?.user.id)
       const friends = await getFriendsFromDB(session?.user.id) || []
       setFriends(friends)
+      setLoading(false)
     }
   }
 
@@ -147,6 +150,9 @@ const Page: FC = () => {
           Add Friend
         </button>
       </form>
+
+      {loading && <p className="text-gray-500 text-xl text-center italic">Loading...</p>}
+
 
       <h3 className="text-xl font-semibold mb-4">Friends List</h3>
       {friends.length > 0 ? (
