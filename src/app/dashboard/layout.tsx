@@ -21,7 +21,7 @@ export default async function RootLayout({
           <div className="relative w-full md:w-4/5 h-screen lg:w-1/2 p-6 rounded-lg">
             <div className="absolute inset-0 pointer-events-none rounded-lg border-[0px] border-transparent box-border"></div>
             <Navbar />
-            <hr className="border-0 h-1 bg-gradient-to-r from-transparent via-black to-transparent mb-6" />
+            <hr className="border-0 h-1 bg-gradient-to-r from-transparent via-black to-transparent mb:2 md:mb-6" />
             <div className="font-permanent-marker">
               {children}
             </div>
