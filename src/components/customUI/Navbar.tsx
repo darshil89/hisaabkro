@@ -4,7 +4,7 @@ import React, { FC, useState } from 'react'
 
 const Navbar: FC = () => {
 
-    const [activeTab, setActiveTab] = useState("dashboard");
+    const [activeTab, setActiveTab] = useState("profile");
 
     return (
         <nav className="flex font-permanent-marker justify-between text-center mb-6 pb-2">
