@@ -2,6 +2,9 @@
 
 ---
 ![App Screenshot](/public/icons/landing.png)
+
+[Watch Video](/public/video/hisaab.mp4)
+
 ---
 
 ## **Overview**
