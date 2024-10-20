@@ -71,10 +71,10 @@ const Dashboard = () => {
   }, [session, router]);
 
   return (
-    <div className="py-12 px-4 sm:px-6 lg:px-8">
+    <div className="py-4 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         {/* Total Expense Card */}
-        <div className="bg-white flex justify-between shadow-lg rounded-lg p-6 mb-8">
+        <div className="bg-white flex flex-col md:flex-row justify-between shadow-lg rounded-lg p-6 mb-8">
           <h2 className="text-xl font-semibold text-gray-700 mb-2">
             Total Expense
           </h2>
@@ -85,13 +85,13 @@ const Dashboard = () => {
 
         {/* Expense Splits */}
         <div className="bg-white shadow-lg rounded-lg p-6">
-          <div className="flex justify-between ">
+          <div className="flex flex-col md:flex-row justify-between mb-4">
             <h2 className="text-xl font-semibold text-gray-700 mb-4">
               Expense Splits <span className="text-green-500">(Resolved)</span>
             </h2>
             <button
               onClick={() => handleDownload()}
-              className="w-fit shadow-[inset_0_0_0_2px_#616467] flex justify-center space-x-4 items-center text-slate-500 px-3 py-1 rounded-full text-sm tracking-widest uppercase font-bold hover:bg-[#616467] hover:text-white  duration-200"
+              className="w-full md:w-auto shadow-[inset_0_0_0_2px_#616467] flex justify-center space-x-4 items-center text-slate-500 px-3 py-1 rounded-full text-sm tracking-widest uppercase font-bold hover:bg-[#616467] hover:text-white duration-200"
             >
               <span>Download</span>
             </button>
@@ -99,31 +99,32 @@ const Dashboard = () => {
           <div className="space-y-4">
             <ul className="mt-4">
               {splits.map((item, index) => (
-                <div className="flex justify-between items-center">
+                <li key={index} className="flex flex-col md:flex-row justify-between items-center border-b py-2">
                   <Link
                     href={
                       !item.splitStatus
                         ? `/dashboard/expense/${item.id}`
                         : `/dashboard/check/${item.id}`
                     }
+                    className="flex-1"
                   >
-                    <li key={index} className="py-2">
+                    <div>
                       <h3 className="font-bold">{item.name}</h3>
                       <p>
-                        Total Expense: ${item.totalAmount} | Type:{" "}
+                        Total Expense: ₹{item.totalAmount} | Type:{" "}
                         {item.splitMethod}
                       </p>
                       <p className="text-xs">
                         {formatDateTime(item.createdAt)}
                       </p>
-                    </li>
+                    </div>
                   </Link>
 
-                  <li key={index} className=" py-2">
+                  <div className="mt-2 md:mt-0 md:ml-4">
                     <h3 className="font-bold">Your Expense</h3>
                     <p className="text-end">{yourEveryExpense[index]}</p>
-                  </li>
-                </div>
+                  </div>
+                </li>
               ))}
             </ul>
           </div>
