@@ -20,6 +20,7 @@ export type Split = {
   id?: string;
   userId?: string;
   name: string;
+  splitStatus?: boolean;
   totalAmount: number;
   splitMethod: string;
   createdAt?: Date;

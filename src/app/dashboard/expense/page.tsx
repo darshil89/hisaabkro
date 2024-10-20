@@ -56,15 +56,19 @@ const ExpensePage = () => {
 
       <ul className="mt-4">
         {splits.map((item, index) => (
-          <Link href={`/dashboard/expense/${item.id}`}>
+          <div className="flex justify-between items-center">
 
-            <li key={index} className="border-b py-2">
-              <h3 className="font-bold">{item.name}</h3>
-              <p>
-                Amount: ${item.totalAmount} | Type: {item.splitMethod}
-              </p>
-            </li>
-          </Link>
+            <Link href={!item.splitStatus ? `/dashboard/expense/${item.id}` : `/dashboard/check/${item.id}`}>
+
+              <li key={index} className="border-b py-2">
+                <h3 className="font-bold">{item.name}</h3>
+                <p>
+                  Amount: ${item.totalAmount} | Type: {item.splitMethod}
+                </p>
+              </li>
+            </Link>
+            <div>{!item.splitStatus ? "Pending" : "Resolved"}</div>
+          </div>
         ))}
       </ul>
     </div>

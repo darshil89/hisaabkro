@@ -23,6 +23,10 @@ const Page: FC = () => {
     const id = pathname.split("/").pop();
 
     const addNewFriend = async () => {
+        if(!newFriend) {
+            alert("Please enter a friend's name");
+            return;
+        }
         if (selectedFriends.find((friend) => friend.name === newFriend)) {
             alert("Friend already added");
             return;
@@ -74,7 +78,12 @@ const Page: FC = () => {
         const existingFriends = async () => {
             if (!session) return;
             const dbFriends = (await getFriendsFromDB(session?.user?.id)) || [];
-            setExistingFriends(dbFriends);
+            const myself = {
+                name: session.user.name + " (You)" || "",
+                email: session.user.email || "",
+                userId: session.user.id,
+            }
+            setExistingFriends([myself, ...dbFriends]);
         };
 
         const fetchSplit = async () => {
