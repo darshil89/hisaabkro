@@ -15,6 +15,7 @@ const Page: FC = () => {
         totalAmount: 0,
         splitMethod: "",
     });
+    const [friendAmounts, setFriendAmounts] = useState<{ [key: string]: number }>({});
 
     const { data: session } = useSession();
     const router = useRouter();
@@ -50,17 +51,36 @@ const Page: FC = () => {
         }
     };
 
+    const updateFriendAmount = (friendName: string, amount: number) => {
+        if (splitDetails.splitMethod === 'equal') {
+            return;
+        }
+
+        let newAmount = amount;
+        if (splitDetails.splitMethod === 'percentage') {
+            newAmount = Math.min(100, Math.max(0, amount));
+        } else if (splitDetails.splitMethod === 'exact') {
+            newAmount = Math.min(splitDetails.totalAmount, Math.max(0, amount));
+        }
+        
+        setFriendAmounts(prev => ({
+            ...prev,
+            [friendName]: newAmount
+        }));
+    };
+
+
     useEffect(() => {
         const existingFriends = async () => {
             if (!session) return;
-            const dbFriends = await getFriendsFromDB(session?.user?.id) || [];
+            const dbFriends = (await getFriendsFromDB(session?.user?.id)) || [];
             setExistingFriends(dbFriends);
-        }
+        };
 
         const fetchSplit = async () => {
             if (!session) return;
-            const newSplit = await getSplit(id, session.user.id) as Split;
-            setSplitDetails(newSplit)
+            const newSplit = (await getSplit(id, session.user.id)) as Split;
+            setSplitDetails(newSplit);
         };
 
         fetchSplit();
@@ -71,8 +91,10 @@ const Page: FC = () => {
         <div className="container mx-auto p-4">
             <h1 className="text-3xl font-bold text-center">{splitDetails.name}</h1>
             <hr className="mb-1 mt-1" />
-            <p className="text-lg mb-6 text-center">Split Method : {splitDetails.splitMethod}</p>
-
+            <p className="text-md mb-6 text-center">
+                Split <span className="underline">&#8377; {splitDetails.totalAmount}</span> by{" "}
+                <span className="underline">{splitDetails.splitMethod}</span> value
+            </p>
             {/* Add New Friend Section */}
             <div className="mb-6">
                 <h2 className="text-xl font-semibold mb-2">Add New Friend</h2>
@@ -138,9 +160,33 @@ const Page: FC = () => {
                                 className="flex justify-between items-center bg-gray-100 p-2 rounded"
                             >
                                 <span>{friend.name}</span>
-                                <span className="text-blue-500">
-                                    Not set
-                                </span>
+                                {splitDetails.splitMethod === 'equal' ? (
+                                    <span className="text-blue-500">
+                                        {(splitDetails.totalAmount / selectedFriends.length).toFixed(2)}
+                                    </span>
+                                ) : splitDetails.splitMethod === 'percentage' ? (
+                                    <input
+                                        type="number"
+                                        value={friendAmounts[friend.name] || ''}
+                                        onChange={(e) => updateFriendAmount(friend.name, Number(e.target.value))}
+                                        className="w-20 p-1 border rounded"
+                                        placeholder="%"
+                                        min="0"
+                                        max="100"
+                                    />
+                                ) : splitDetails.splitMethod === 'exact' ? (
+                                    <input
+                                        type="number"
+                                        value={friendAmounts[friend.name] || ''}
+                                        onChange={(e) => updateFriendAmount(friend.name, Number(e.target.value))}
+                                        className="w-20 p-1 border rounded"
+                                        placeholder="Amount"
+                                        min="0"
+                                        max={splitDetails.totalAmount}
+                                    />
+                                ) : (
+                                    <span className="text-blue-500">Not set</span>
+                                )}
                             </li>
                         ))}
                     </ul>
@@ -148,7 +194,6 @@ const Page: FC = () => {
             </div>
         </div>
     );
-
 };
 
 export default Page;
