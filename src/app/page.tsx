@@ -16,7 +16,7 @@ export default function Home() {
   const handleSignIn = async () => {
     if (status === 'unauthenticated') {
       await signIn("google" , {
-        callbackUrl: "/dashboard",
+        callbackUrl: "/dashboard/profile",
       });
     }
     else
