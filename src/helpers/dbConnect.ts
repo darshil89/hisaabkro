@@ -60,11 +60,22 @@ export async function createSplit(split: Split, userId: string | undefined) {
   try {
     const response = await axios.post("/api/split", {
       name: split.name,
-      amount: split.amount,
-      type: split.type,
+      amount: split.totalAmount,
+      type: split.splitMethod,
       userId,
     });
     return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+
+//function to get all splits of a user
+export async function getSplits(userId: string | undefined) {
+  try {
+    const response = await axios.get(`/api/split/${userId}`);
+    return response.data as Split[];
   } catch (error) {
     console.error(error);
   }

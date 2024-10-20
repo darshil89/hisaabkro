@@ -1,10 +1,9 @@
 "use client";
-import { addFriendsToDB, getFriendsFromDB } from "@/helpers/dbConnect";
+import { getFriendsFromDB } from "@/helpers/dbConnect";
 import React, { FC, useState, useEffect } from "react";
 import { Friends } from "@/types/user";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useParams } from "next/navigation";
 
 const Page: FC = () => {
     const [friends, setFriends] = useState<Friends>([]);

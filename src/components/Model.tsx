@@ -40,8 +40,8 @@ const Model = ({ handleOk, showModal, splitDetails, setSplitDetails }: ModelProp
                         </label>
                         <input
                             type="number"
-                            value={splitDetails.amount}
-                            onChange={(e) => setSplitDetails({ ...splitDetails, amount: +e.target.value })}
+                            value={splitDetails.totalAmount}
+                            onChange={(e) => setSplitDetails({ ...splitDetails, totalAmount: +e.target.value })}
                             id="amount"
                             name="amount"
                             required
@@ -58,8 +58,8 @@ const Model = ({ handleOk, showModal, splitDetails, setSplitDetails }: ModelProp
                         <select
                             id="type"
                             name="type"
-                            value={splitDetails.type}
-                            onChange={(e) => setSplitDetails({ ...splitDetails, type: e.target.value })}
+                            value={splitDetails.splitMethod}
+                            onChange={(e) => setSplitDetails({ ...splitDetails, splitMethod: e.target.value })}
                             required
                             className="mt-1 block w-full p-2 rounded-md border border-gray-300 shadow-sm focus:border-blue-300 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
                         >

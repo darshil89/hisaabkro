@@ -17,9 +17,13 @@ export type Friend = {
 };
 
 export type Split = {
+  id?: string;
+  userId?: string;
   name: string;
-  amount: number;
-  type: string;
+  totalAmount: number;
+  splitMethod: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export type Splits = Split[];
