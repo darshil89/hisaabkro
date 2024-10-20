@@ -67,7 +67,7 @@ const ExpensePage = () => {
                 </p>
               </li>
             </Link>
-            <div>{!item.splitStatus ? "Pending" : "Resolved"}</div>
+            <div className={`${item.splitStatus ? "text-green-500" : "text-red-500"}`}>{!item.splitStatus ? "Pending" : "Resolved"}</div>
           </div>
         ))}
       </ul>
