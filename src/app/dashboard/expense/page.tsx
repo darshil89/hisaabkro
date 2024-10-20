@@ -44,7 +44,7 @@ const ExpensePage = () => {
   }, [session, router]);
 
   return (
-    <div className="p-4">
+    <div className="p-4 md:p-6">
       <button
         onClick={showModal}
         className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -56,21 +56,21 @@ const ExpensePage = () => {
         <Model showModal={showModal} handleOk={handleOk} setSplitDetails={setSplitDetails} splitDetails={splitDetails} />
       )}
 
-      <ul className="mt-4">
+      <ul className="mt-4 space-y-4">
         {splits.map((item, index) => (
-          <div className="flex justify-between items-center">
-
-            <Link href={!item.splitStatus ? `/dashboard/expense/${item.id}` : `/dashboard/check/${item.id}`}>
-
-              <li key={index} className="border-b py-2">
+          <li key={index} className="flex justify-between items-center border-b py-2">
+            <Link href={!item.splitStatus ? `/dashboard/expense/${item.id}` : `/dashboard/check/${item.id}`} className="flex-1">
+              <div>
                 <h3 className="font-bold">{item.name}</h3>
                 <p>
                   Amount: ${item.totalAmount} | Type: {item.splitMethod}
                 </p>
-              </li>
+              </div>
             </Link>
-            <div className={`${item.splitStatus ? "text-green-500" : "text-red-500"}`}>{!item.splitStatus ? "Pending" : "Resolved"}</div>
-          </div>
+            <div className={`${item.splitStatus ? "text-green-500" : "text-red-500"} ml-4`}>
+              {!item.splitStatus ? "Pending" : "Resolved"}
+            </div>
+          </li>
         ))}
       </ul>
     </div>
