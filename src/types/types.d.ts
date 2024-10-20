@@ -9,6 +9,7 @@ declare module "next-auth/jwt" {
     id: UserId;
     emailVerified: CustomType;
     accessToken: string!;
+    number?: string;
   }
 }
 
@@ -17,10 +18,12 @@ declare module "next-auth" {
     user: User & {
       id: UserId;
       emailVerified: CustomType;
+      number?: string;
     };
   }
 
   interface User {
     emailVerified: CustomType;
+    number?: string;
   }
 }

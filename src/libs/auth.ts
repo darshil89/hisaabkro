@@ -3,7 +3,6 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "./prisma";
 
-
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
 
@@ -29,17 +28,25 @@ export const authOptions: AuthOptions = {
   },
   secret: process.env.SECRET,
   callbacks: {
-    async jwt({ token, account, user }) {
+    async jwt({ token, account, user, trigger, session }) {
+      if (trigger === "update") {
+        return {
+          ...token,
+          number: session.user.number,
+        }
+      }
       if (account) {
         token.accessToken = account.accessToken as string;
         token.id = user.id;
         token.emailVerified = user.emailVerified;
+        token.number = user.number;
       }
       return token;
     },
     async session({ session, token }) {
       session.user.id = token.id;
       session.user.emailVerified = token.emailVerified;
+      session.user.number = token.number;
       return session;
     },
   },

@@ -1,55 +1,116 @@
 "use client";
-import React, { FC, useState } from 'react'
+import React, { FC, use, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
+import { AiOutlineDelete } from "react-icons/ai";
+import { addFriendsToDB, addNunmberToDB, deleteFriend, getFriendsFromDB } from '@/helpers/dbConnect';
+import { useRouter } from 'next/navigation';
+import { Friend } from '@/types/user';
 
 const Page: FC = () => {
-  const [friends, setFriends] = useState<{ name: string; email: string }[]>([])
+  const [friends, setFriends] = useState<Friend[]>([])
   const [newFriend, setNewFriend] = useState({ name: '', email: '' })
-  const { data: session } = useSession()
+  const [number, setNumber] = useState<string>('')
+  const { data: session, update, status } = useSession()
+  const router = useRouter()
 
   console.log(session)
 
-  const addFriend = (e: React.FormEvent) => {
+  const addFriend = async (e: React.FormEvent) => {
     e.preventDefault()
     if (newFriend.name && newFriend.email) {
-      setFriends([...friends, newFriend])
-      setNewFriend({ name: '', email: '' })
+      // adding the friend to the friends list
+      await addFriendsToDB(newFriend, session?.user.id)
+      await getFriendsFromDB(session?.user.id)
+      const friends = await getFriendsFromDB(session?.user.id) || []
+      setFriends(friends)
     }
   }
+  const handleDelete = async (id: string) => {
+    await deleteFriend(id)
+    await getFriendsFromDB(session?.user.id)
+    const friends = await getFriendsFromDB(session?.user.id) || []
+    setFriends(friends)
+  }
+
+  const saveNumber = async () => {
+    // updating the number in user active session
+    await update({
+      ...session,
+      user: {
+        ...session?.user,
+        number: number
+      }
+    })
+
+    // adding the number to the user in the database
+    const response = await addNunmberToDB(number, session?.user.id)
+    console.log(response)
+    alert('Mobile number saved successfully!')
+  }
+
+  const handleSignOut = async () => {
+    await signOut();
+  }
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/')
+    }
+  }, [status, router])
+
+  useEffect(() => {
+    async function fetchFriends() {
+      if (session) {
+        const friends = await getFriendsFromDB(session?.user.id) || []
+        console.log(friends)
+        setFriends(friends)
+      }
+    }
+    fetchFriends()
+  }, [session])
 
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg">
-      <h1 className="text-3xl font-bold mb-6 text-center">Profile</h1>
+      <div className='flex justify-between'>
 
-      <div className="flex items-center mb-6">
-        <Image
-          src={session?.user.image || '/default-profile.png'}
-          alt="Profile Picture"
-          width={100}
-          height={100}
-          className="rounded-full mr-6"
-        />
+        <div className="flex items-center mb-6">
+          <Image
+            src={session?.user.image || '/icons/user.jpg'}
+            alt="Profile Picture"
+            width={100}
+            height={100}
+            className="rounded-full mr-6"
+          />
+          <div>
+            <h2 className="text-2xl font-semibold">{session?.user.name}</h2>
+            <p className="text-gray-600">{session?.user.email}</p>
+          </div>
+        </div>
         <div>
-          <h2 className="text-2xl font-semibold">{session?.user.name}</h2>
-          <p className="text-gray-600">{session?.user.email}</p>
+          <button onClick={() => handleSignOut()} className="w-fit mt-8 shadow-[inset_0_0_0_2px_#616467] flex justify-center space-x-4 items-center text-black px-6 py-2 rounded-full text-sm tracking-widest uppercase font-bold bg-transparent hover:bg-[#616467] hover:text-white dark:text-neutral-200 transition duration-200">
+            <span>Log Out</span>
+          </button>
         </div>
       </div>
 
       <div className="mb-6">
         <label htmlFor="mobile" className="block text-sm font-medium text-gray-700 mb-1">Mobile Number</label>
         <div className="relative">
-          <input
+          {session?.user.number ? <>
+            <div className='w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-16'>{session?.user.number}</div>
+          </> : <><input
             type="tel"
             id="mobile"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 pr-16"
             placeholder="Enter your mobile number"
-          />
-          <button
+          /> <button onClick={() => saveNumber()}
             className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-4 py-1 rounded-md hover:bg-blue-600 transition duration-200"
           >
-            Save
-          </button>
+              Save
+            </button></>}
         </div>
       </div>
 
@@ -86,11 +147,18 @@ const Page: FC = () => {
       <h3 className="text-xl font-semibold mb-4">Friends List</h3>
       {friends.length > 0 ? (
         <ul className="space-y-2">
-          {friends.map((friend, index) => (
-            <li key={index} className="bg-gray-100 p-3 rounded-md">
-              <p className="font-semibold">{friend.name}</p>
-              <p className="text-sm text-gray-600">{friend.email}</p>
+          {friends.map((friend, id) => (
+
+            <li key={id} className="flex justify-between bg-gray-100 p-3 rounded-md">
+              <div>
+                <p className="font-semibold">{friend.name}</p>
+                <p className="text-sm text-gray-600">{friend.email}</p>
+              </div>
+              <button className='' onClick={() => handleDelete(friend.id)}>
+                <AiOutlineDelete size={25} />
+              </button>
             </li>
+
           ))}
         </ul>
       ) : (
