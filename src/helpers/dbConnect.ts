@@ -108,3 +108,13 @@ export async function addSplitBill(split: {
     console.error(error);
   }
 }
+
+// function to get the split bill of a particular split
+export async function getSplitBill(splitId: string | undefined) {
+  try {
+    const response = await axios.get(`/api/splitbill/${splitId}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}

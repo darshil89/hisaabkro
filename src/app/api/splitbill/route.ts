@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prisma";
 import { SplitMember } from "@/types/user";
+import { Split } from "@prisma/client";
 
 export async function POST(req: Request) {
   const { split } = await req.json();
@@ -30,6 +31,6 @@ export async function POST(req: Request) {
       splitStatus: true,
     },
   });
-
+  
   return NextResponse.json({ message: "success" });
 }
