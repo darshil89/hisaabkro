@@ -43,7 +43,7 @@ const PushEventDisplay = () => {
     <div>
       <h2>Latest GitHub Push Event</h2>
       <p><strong>Repository:</strong> {pushData.repository.name}</p>
-      {/* <p><strong>Commit Message:</strong> {pushData.head_commit.message}</p> */}
+      <p><strong>Commit Message:</strong> {pushData.head_commit.message}</p>
       <p><strong>Committer:</strong> {pushData.head_commit.committer.name}</p>
     </div>
   );
