@@ -112,7 +112,7 @@ const Dashboard = () => {
                       <h3 className="font-bold">{item.name}</h3>
                       <p>
                         Total Expense: ₹{item.totalAmount} | Type:{" "}
-                        {item.splitMethod}
+                        {item.splitMethod }
                       </p>
                       <p className="text-xs">
                         {formatDateTime(item.createdAt)}
@@ -120,7 +120,7 @@ const Dashboard = () => {
                     </div>
                   </Link>
 
-                  <div className="mt-2 md:mt-0 md:ml-4">
+                  <div className="mt-2 md:mt-0 w-full flex space-x-2 justify-start items-start md:block md:w-fit">
                     <h3 className="font-bold">Your Expense</h3>
                     <p className="text-end">{yourEveryExpense[index]}</p>
                   </div>

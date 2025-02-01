@@ -17,21 +17,21 @@ const Navbar: FC = () => {
                     }`}
                 onClick={() => setActiveTab("dashboard")}
             >
-                Dashboard
+                ᗪᗩᔕᕼᗷᗝᗩᖇᗪ
             </Link>
             <Link href="/dashboard/profile"
                 className={`w-full md:w-1/3 pb-2 text-lg md:text-2xl ${activeTab === "profile" ? "font-semibold" : "font-normal"
                     }`}
                 onClick={() => setActiveTab("profile")}
             >
-                Profile
+                ᑭᖇᗝᖴᏆ⎳ᗴ
             </Link>
             <Link href="/dashboard/expense"
                 className={`w-full md:w-1/3 pb-2 text-lg md:text-2xl ${activeTab === "expense" ? "font-semibold" : "font-normal"
                     }`}
                 onClick={() => setActiveTab("expense")}
             >
-                Expense
+                ᗴ᙭ᑭᗴᑎᔕᗴ
             </Link>
         </nav>
     )

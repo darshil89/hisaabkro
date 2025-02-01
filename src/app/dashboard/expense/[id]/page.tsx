@@ -120,10 +120,10 @@ const Page: FC = () => {
 
         console.log(split);
 
-        // await addSplitBill(split);
+        await addSplitBill(split);
 
 
-        // router.push("/dashboard/expense");
+        router.push("/dashboard/expense");
     };
 
 
@@ -160,7 +160,7 @@ const Page: FC = () => {
                 <span className="underline">{splitDetails.splitMethod}</span> value
             </p>
             {/* Add New Friend Section */}
-            <div className="mb-6">
+            {/* <div className="mb-6">
                 <h2 className="text-xl font-semibold mb-2">Add New Friend</h2>
                 <div className="flex">
                     <input
@@ -177,7 +177,7 @@ const Page: FC = () => {
                         Add
                     </button>
                 </div>
-            </div>
+            </div> */}
 
             {/* Add Existing Friends Section */}
             <div className="mb-6">
