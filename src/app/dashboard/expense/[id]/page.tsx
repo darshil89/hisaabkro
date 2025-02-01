@@ -15,6 +15,7 @@ const Page: FC = () => {
         totalAmount: 0,
         splitMethod: "",
     });
+    const [compare, setCompare] = useState<number>();
     const [friendAmounts, setFriendAmounts] = useState<{ [key: string]: number }>({});
 
     const { data: session } = useSession();
@@ -60,6 +61,7 @@ const Page: FC = () => {
 
     // function to update the amount of the friend based on the split method
     const updateFriendAmount = (friendName: string, amount: number) => {
+
         if (splitDetails.splitMethod === 'equal') {
             return;
         }
@@ -69,6 +71,7 @@ const Page: FC = () => {
             newAmount = Math.min(100, Math.max(0, amount));
         } else if (splitDetails.splitMethod === 'exact') {
             newAmount = Math.min(splitDetails.totalAmount, Math.max(0, amount));
+            console.log(newAmount);
         }
 
         setFriendAmounts(prev => ({
@@ -115,10 +118,12 @@ const Page: FC = () => {
             finalArray,
         };
 
-        await addSplitBill(split);
+        console.log(split);
+
+        // await addSplitBill(split);
 
 
-        router.push("/dashboard/expense");
+        // router.push("/dashboard/expense");
     };
 
 
@@ -140,8 +145,8 @@ const Page: FC = () => {
             if (!session) return;
             const newSplit = (await getSplit(id, session.user.id)) as Split;
             setSplitDetails(newSplit);
+            setCompare(newSplit.totalAmount);
         };
-
         fetchSplit();
         existingFriends();
     }, [session, router]);
@@ -230,15 +235,34 @@ const Page: FC = () => {
                                         max="100"
                                     />
                                 ) : splitDetails.splitMethod === 'exact' ? (
-                                    <input
-                                        type="number"
-                                        value={friendAmounts[friend.name] || ''}
-                                        onChange={(e) => updateFriendAmount(friend.name, Number(e.target.value))}
-                                        className="w-20 p-1 border rounded"
-                                        placeholder="Amount"
-                                        min="0"
-                                        max={splitDetails.totalAmount}
-                                    />
+                                    <div className="flex items-center justify-center">
+                                        <input
+                                            type="number"
+                                            value={friendAmounts[friend.name] || 0}
+                                            onChange={(event) => {
+                                                const currentValue = Number(event.target.value)
+                                                const updatedinput = Math.min(compare ?? 0, Math.max(0, currentValue))
+                                                setFriendAmounts(prev => ({
+                                                    ...prev,
+                                                    [friend.name]: updatedinput > 0 ? updatedinput : 0
+                                                }));
+                                            }}
+                                            className="w-20 p-1 border rounded"
+                                            placeholder="Amount"
+                                            min="0"
+                                            max={splitDetails.totalAmount}
+                                        />
+                                        <button
+                                            className="bg-blue-500 ml-1 w-fit text-white px-2 py-1 rounded hover:bg-blue-600"
+                                            onClick={() => {
+                                                const nextCompare = splitDetails.totalAmount - Object.values(friendAmounts).reduce((a, b) => a + b, 0)
+                                                setCompare(nextCompare)
+                                            }}
+
+                                        >
+                                            Set
+                                        </button>
+                                    </div>
                                 ) : (
                                     <span className="text-blue-500">Not set</span>
                                 )}
