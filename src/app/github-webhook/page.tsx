@@ -19,7 +19,7 @@ const PushEventDisplay = () => {
   useEffect(() => {
     const fetchPushData = async () => {
       try {
-        const response = await fetch('/api/test');
+        const response = await fetch('/api/webhook');
         const data = await response.json();
         
         if (response.ok) {
