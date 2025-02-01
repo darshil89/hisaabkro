@@ -30,8 +30,13 @@ const ExpensePage = () => {
     // create split
     const newSplit = await createSplit(splitDetails, session?.user?.id);
 
+
+
     setSplits([...splits, newSplit]);
     showModal();
+
+    // navigate to the new split page
+    router.push(`/dashboard/expense/${newSplit.id}`);
   };
 
   // Fetch splits
