@@ -25,7 +25,7 @@
 - 🛠️ **Auth2 Google Authentication:** Ensured secure and controlled access to the platform through Google auth.
 - 💡 **Dashboard:** Monitor your budget including full expense and task wise expense.
 - 🚀 **PDF Downloader:** Download you receipt in PDF Format.
----
+--- 
 
 ## **Tech Stack** 🛠️
 
